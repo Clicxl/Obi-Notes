@@ -44,9 +44,25 @@ This is a detailed explanation of how to build a full stack project. This uses t
 - Next step is to setup [prettier](https://prettier.io/) using `npm install --save-dev --save-exact prettier`.
 - After this the `.prettierrc` file is created to write down the configs of project and `.pritterignore` file is created just like `.gitignore` to notify prettier from not modifying  unwanted files.
 - Next initialise the [[Git]] repository and create a `.gitignore` file, you can use this [website](https://www.toptal.com/developers/gitignore) to automatically produce common ignore files for git. After all this do the first commit.
-- Next setup a hot-reload of the server, generally [nodemon](https://www.npmjs.com/package/nodemon) is used to do the hot-reload of the server but a new alternative is `node--watch`.
+- Next setup a hot-reload of the server, generally [nodemon](https://www.npmjs.com/package/nodemon) is used to do the hot-reload of the server but a new alternative is `node --watch`.
 - Change the `dev` script in package.json to run the program with nodemon instead of node
 ```json
 "dev": "nodemon index.js"
 "start": 'node index.js'
 ```
+
+- Next step is to reorganize the files into their respective folders, these are the default ones:
+```text
+public
+	├── images
+├── src
+	├── controllers
+	├── db
+	├── middleware
+	├── models
+	├── routes
+	├── utils/scripts
+	├── validators
+```
+
+- Now configure your routes using [[Express.js]] and other API Testers like Postman, Bruno etc.

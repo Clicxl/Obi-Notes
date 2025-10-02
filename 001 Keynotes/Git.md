@@ -13,6 +13,7 @@ Git is a version control that help manage big projects by storing timeline like 
 - `git checkout HEAD~2` - Returns 2 commits before head (Can be any number).
 - `git checkout <commit-hash>` - Can checkout how that project was at the commit-hash 
 - `git reflog` - Returns you to the previous position of the HEAD.
+- `git remote add origin <your-remote-url>` - Add a remote repository to git.
 
 ### Notes:
 - Be very careful with `git rebase <branch>`, It replaces the current branch as the base of the provided branch. Eg: `git rebase master`, if this command is run in a branch called `bug-fix`  then the whole of master branch's base will be snapped to where the bug-fix starts (previous commits of the master branch remain but the commits after the `bug-fix` branch was created will be erased.

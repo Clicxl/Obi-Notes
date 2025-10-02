@@ -43,7 +43,7 @@ console.log(`Server listening at port ${port}`);
 
 
 ### Notes
-- `process.argv` is a very helpful method that fetches all the extra parameters passed through during run time. This can be used to create CLI (Command Line Interface) to for [[Linux]] or other OS to handle arguments passed in when running a command. It returns a list of all the args passed starting from "node env", "file_name" and then the rest.
+- `process.argv` is a very helpful method that fetches all the extra parameters passed through during run time. This can be used to create CLI (Command Line Interface) to for [[Unix]] or other OS to handle arguments passed in when running a command. It returns a list of all the args passed starting from "node env", "file_name" and then the rest.
 - `http` is used to create and manage server of the backend, A server is created using `http.createServer()`
 - under the hood `libuv` is responsible to bind all the requests and responses, as base JS cant listen to https servers.
 - `__dirname` return the absolute path of the current directory and `__filename` returns the absolute path of the current file name.
