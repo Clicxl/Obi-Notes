@@ -77,3 +77,72 @@ KEY: "value",
 export const AvailableConstEnum = Object.values(ConstEnum) // Returns a list of all the values in the constant as an array
 ```
 - Next connect your back-end to [[MongoDB]] using anything like mongo-db atlas.
+- Now that mongoDB/Atlas is setup, we change the main `index.js` to listen to port only when the DB is responding else throw an error.
+```js
+connectDB()
+.then(() => { // .then() method is used as a try catch
+APP.listen(PORT, () => {
+console.log(`Proj1 is listening on port https://localhost:${PORT}}`);
+})})
+
+.catch((err) => {
+console.error("MongoDB connection error: ",err);
+process.exit(1)
+})
+```
+- Next are the health-check controllers, these help check if the servers API endpoints are online or not in AWS or Azure.
+- So using our old `APIresponse` class we create a new controller.
+```js
+import { APIResponse } from "../utils/api-response.js"
+
+const healthCheck = async (req, res) => {
+try {
+res
+.status(200).json( // Is response.status code is 200 
+new APIResponse(200,{message: "Server is running!"}) // Creates a new and sends response via json format 
+)
+
+} catch (error) {
+next(error)
+}}
+export default healthCheck
+```
+- Next step is to create the routes for this controllers (In this project the route for the healthchecker is `/api/v1/healthcheck`).
+```js
+import { Router } from "express"; 
+import { healthCheck } from "../controllers/healthcheck.controllers.js
+
+const router = Router()
+router.route("/").get(healthCheck) // From there all the routes that are diverted here are manager (Like if /api/v1/healthcheck/instagram came up we can add it here)
+export default router
+```
+- Next step is to notify the app of this route (Inject after all the configurations): 
+```js 
+// Import routes
+
+import healthCheckRouter from "./controllers/healthcheck.controllers.js"
+APP.use("/api/v1/healthcheck",healthCheckRouter) // Reroutes all /api/v1/healthcheck into the healthCheckerRouter
+```
+- A new utility is created to resolve all the requests. It main goal is to convert all the try-catch into a Promise based function.
+```js
+const asyncHandler = (requrestHandler) => {
+
+return (req,res,next) => { // Returns a function 
+Promise
+.resolve(requrestHandler(req,res,next))
+.catch((err) => next(err)) // Handles the errors and passes it to express error handling
+}}
+  
+export {asyncHandler}
+```
+- So using this we will change the controller:
+```js
+const healthCheck = asyncHandler(async (req,res,next) => {
+
+res
+.status(200).json(
+new APIResponse(200,{message: "✅ Server is running!"})
+)})
+```
+- Next write the schema of the database using [[MongoDB]].
+- 
